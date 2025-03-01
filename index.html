@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GSAP slider</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<style>
+    *,
+    *::before,
+    *::after {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
+
+    body,
+    html {
+        width: 100%;
+        height: 100%;
+        position: relative;
+    }
+
+    body {
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        background-color: #f4f4f4;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        padding: 1rem;
+    }
+
+    body>h1 {
+        text-align: center;
+        margin: 1rem auto;
+        font-size: clamp(2rem, 3vw, 4rem);
+        text-transform: capitalize;
+    }
+
+    .slideContainer {
+        max-width: 800px;
+        background-color: black;
+        color: white;
+        overflow: hidden;
+        position: relative;
+        isolation: isolate;
+        height: 100%;
+        width: 100%;
+    }
+
+    .slideContainer .slide {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .slideContainer .slide .imgBox {
+        width: 100%;
+    }
+
+    .slideContainer .slide .imgBox img {
+        max-height: 500px;
+        max-width: 100%;
+        width: fit-content;
+        height: 100%;
+        object-fit: contain;
+    }
+
+    .slideContainer .slide h2 {
+        position: absolute;
+        top: 80%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: #FF00FF;
+        font-size: clamp(2rem, 6vw, 8rem);
+        text-transform: uppercase;
+        z-index: -1;
+        white-space: nowrap;
+    }
+
+    .slideContainer .slide h2:nth-child(2) {
+        color: transparent;
+        -webkit-text-stroke: 0.15vw white;
+        z-index: 1;
+    }
+
+    .slideContainer .arrows {
+        width: 100%;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        padding: 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .slideContainer .arrows button {
+        cursor: pointer;
+        background-color: white;
+        color: black;
+        border: none;
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.2rem;
+        transition: 300ms ease;
+    }
+
+    .slideContainer .arrows button:hover {
+        background-color: rgba(255, 255, 255, 0.733);
+    }
+
+    .slideContainer .arrows button:active {
+        background-color: rgba(255, 255, 255, 0.877);
+        transform: scale(0.9);
+    }
+
+    .slideContainer .dotsContainer {
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem;
+    }
+
+    .slideContainer .dotsContainer .dot {
+        width: 25px;
+        height: 25px;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        background-color: #FF00FF;
+        color: white;
+    }
+</style>
+
+<body>
+    <h1>GSAP slider</h1>
+    <div class="slideContainer">
+        <div class="slide">
+            <div class="imgBox"><img src="./images/goku.png" alt=""></div>
+            <h2>son goku</h2>
+            <h2>son goku</h2>
+        </div>
+        <div class="slide">
+            <div class="imgBox"><img src="./images/inosuke.png" alt=""></div>
+            <h2>inosuke</h2>
+            <h2>inosuke</h2>
+        </div>
+        <div class="slide">
+            <div class="imgBox"><img src="./images/itachi.png" alt=""></div>
+            <h2>itachi</h2>
+            <h2>itachi</h2>
+        </div>
+        <div class="slide">
+            <div class="imgBox"><img src="./images/naruto.png" alt=""></div>
+            <h2>naruto</h2>
+            <h2>naruto</h2>
+        </div>
+        <div class="slide">
+            <div class="imgBox"><img src="./images/rengoku.png" alt=""></div>
+            <h2>rengoku</h2>
+            <h2>rengoku</h2>
+        </div>
+        <div class="slide">
+            <div class="imgBox"><img src="./images/tanjiro.png" alt=""></div>
+            <h2>tanjiro</h2>
+            <h2>tanjiro</h2>
+        </div>
+        <div class="slide">
+            <div class="imgBox"><img src="./images/zenitsu.png" alt=""></div>
+            <h2>zenitsu</h2>
+            <h2>zenitsu</h2>
+        </div>
+
+        <!-- arrows -->
+        <div class="arrows">
+            <button class="prev"><i class="fa-solid fa-angles-left"></i></button>
+            <button class="next"><i class="fa-solid fa-angles-right"></i></button>
+        </div>
+        <!-- dots -->
+        <div class="dotsContainer"></div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"
+        integrity="sha512-7eHRwcbYkK4d9g/6tD/mhkf++eoTHwpNM9woBxtPUBWm67zeAfFC+HrdoE2GanKeocly/VxeLvIqwvCdk7qScg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const prevBtn = document.querySelector('.arrows .prev')
+        const nextBtn = document.querySelector('.arrows .next')
+        const dotsContainer = document.querySelector('.dotsContainer')
+        const colors = [
+            "#FF00FF", // Magenta
+            "#FF4500", // Neon Orange
+            "#39FF14", // Neon Green
+            "#FF1493", // Deep Pink
+            "#FFD700", // Neon Yellow
+            "#8A2BE2", // Electric Purple
+            "#00FF7F", // Spring Green
+            "#FF69B4", // Hot Pink
+            "#1E90FF", // Dodger Blue
+            "#FF6347", // Neon Tomato
+            "#ADFF2F", // Green Yellow
+            "#9400D3", // Dark Violet
+            "#00BFFF", // Deep Sky Blue
+            "#FF00FF", // Fuchsia
+        ];
+        // hide all the slides at start except first slide
+        gsap.set(slides, {
+            autoAlpha: (i) => i == 0 ? 1 : 0
+        })
+        // slider variables
+        let currentSlideIndex = 0;
+        let isAnimating = false;
+        let autoSlideInetrval;
+        // insert dots
+        slides.forEach((slide, index) => {
+            let dot = document.createElement("span");
+            dot.setAttribute('class', 'dot');
+            let textNode = document.createTextNode(index + 1);
+            dot.appendChild(textNode);
+            dotsContainer.appendChild(dot);
+        })
+        // select all dots
+        let dots = dotsContainer.querySelectorAll('.dot');
+        updateDots();
+        // function to show slide
+        function showSlide() {
+            isAnimating = true;
+            //show current slide and hide others
+            gsap.set(slides, {
+                autoAlpha: (i) => i == currentSlideIndex ? 1 : 0
+            })
+            //add animation to the current slide elements
+            let currentSlide = slides[currentSlideIndex];
+            let ImgBox = currentSlide.querySelector('.imgBox');
+            let headings = currentSlide.querySelectorAll('h2');
+            gsap
+                .timeline({
+                    onComplete: () => {
+                        isAnimating = false;
+                    }
+                })
+                .from(ImgBox, {
+                    y: 100,
+                    opacity: 0,
+                    duration: 0.5
+                }).from(headings, {
+                    y: -100,
+                    opacity: 0,
+                    duration: 0.5,
+                    delay: -0.5
+                }).to(headings[1], {
+                    color: gsap.utils.random(colors),
+                    delay: -1
+                })
+            // update dots
+            updateDots()
+        }
+        // prev slide
+        function prevSlide() {
+            // handle multiple clicks
+            if (isAnimating) return
+            // currentSlideIndex --;
+            currentSlideIndex = (currentSlideIndex - 1 + slides.length) % slides.length;
+            showSlide()
+            resetAutoslide()
+        }
+        //next slide
+        function nextSlide() {
+            if (isAnimating) return
+            // currentSlideIndex++;
+            currentSlideIndex = (currentSlideIndex + 1) % slides.length;
+            showSlide()
+            resetAutoslide()
+        }
+        // gotTo slide
+        function goToSlide(index) {
+            if (isAnimating) return
+            currentSlideIndex = index;
+            showSlide()
+            resetAutoslide()
+        }
+        // update dots
+        function updateDots() {
+            gsap.set(dots, {
+                opacity: (i) => i === currentSlideIndex ? 1 : 0.5,
+                duration: 0.2,
+                backgroundColor: (i) => i === currentSlideIndex ? gsap.utils.random(colors) : colors[0]
+            })
+        }
+        //reset autoslide
+        function resetAutoslide() {
+            clearInterval(autoSlideInetrval);
+            autoSlideInetrval = setInterval(() => {
+                nextSlide()
+            }, 3000)
+        }
+        // auto slide
+        autoSlideInetrval = setInterval(() => {
+            nextSlide()
+        }, 3000)
+        nextBtn.addEventListener('click', nextSlide)
+        prevBtn.addEventListener('click', prevSlide)
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                goToSlide(index);
+            })
+        })
+    </script>
+</body>
+
+</html>
