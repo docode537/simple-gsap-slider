@@ -48,9 +48,9 @@ A simple and visually appealing image slider using GSAP (GreenSock Animation Pla
 ## Contributing
 Feel free to fork this repository and submit pull requests with improvements.
 ## 🎥 Video Tutorial
-Watch the tutorial video: [Comming Soon](#)
+Watch the tutorial video: [Learn By Video](#)
 ## Blog Post Tutorial
-🐦 blog post: [Comming Soon](#) 
+🐦 blog post: [Read Blog Post](https://docode.co.in/post/gsap-slider-tutorial-animated-image-carousel) 
 ## 📩 Connect With Me
 🌐 Website: [DoCode](https://docode.co.in/)
 📧 Email: docode537@gmail.com 
